@@ -10,7 +10,7 @@ x0 = 10000;
 
 % user settings
 ratio = 0.5; % inner circle
-nv = 8; % number of vertex points
+nv = 12; % number of vertex points
 [rxVec, ryVec,rx,ry,x,y1,y2,rx1,ry1] = plotStar(x0,ratio,nv);
 
 % plot an inner star
