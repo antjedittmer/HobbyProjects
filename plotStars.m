@@ -23,37 +23,34 @@ xM = x0/3;
 [rxMatrix,ry1Matrix,ry2Matrix] = getCircle(r1,nv,xM);
 
 % 2nd circle on each line
-r1 = x0/15;
+r1 = x0/25; %15
 xM = 2*x0/3;
 [rxMatrix1,ry1Matrix1,ry2Matrix1] = getCircle(r1,nv,xM);
 
 % Plot
 figure(1)
-plot(x,y1,'k--',x,y2,'k--');
+plot(x,y1,'k-.',x,y2,'k--');
 axis tight;
 set(gcf, 'position',[360   149   523   523]);
 hold on;
-
 plot(rx,ry,'r*');
-plot(x,y1,'k-.',x,y2,'k-.');
 plot(rx1,ry1,'ro');
-plot(rxVec,ryVec);
+plot(rxVec,ryVec,'g-');
+plot(rxVec1,ryVec1,'b-');
+% 
+% for idx = 0: nv-1
+%     x1 = rxMatrix(idx +1,:);
+%     y1 = ry1Matrix(idx+1,:);
+%     y2 = ry2Matrix(idx+1,:);
+%     plot(x1,y1,'b',x1,y2,'b');
+% end
 
-plot(rxVec1,ryVec1,'b');
-
-for idx = 0: nv-1
-    x1 = rxMatrix(idx +1,:);
-    y1 = ry1Matrix(idx+1,:);
-    y2 = ry2Matrix(idx+1,:);
-    plot(x1,y1,'b',x1,y2,'b');
-end
-
-for idx = 0: nv-1
-    x1 = rxMatrix1(idx +1,:);
-    y1 = ry1Matrix1(idx+1,:);
-    y2 = ry2Matrix1(idx+1,:);
-    plot(x1,y1,'b',x1,y2,'b');
-end
+% for idx = 0: nv-1
+%     x1 = rxMatrix1(idx +1,:);
+%     y1 = ry1Matrix1(idx+1,:);
+%     y2 = ry2Matrix1(idx+1,:);
+%     plot(x1,y1,'b',x1,y2,'b');
+% end
 hold off
 
 hFig =figure(2);
@@ -79,8 +76,18 @@ for idx = 0: nv-1
     y2 = ry2Matrix1(idx+1,:);
     plot(x1,y1,'k',x1,y2,'k');
 end
+set(gca,'YColor',[1,1,1])
+set(gca,'XColor',[1,1,1])
+set(gca,'Color',[1,1,1])
+
+ax = gca;
+ax.XAxis.Visible = 'off';
+ax.YAxis.Visible = 'off';
+
 hold off
 saveas(hFig,'sternchen.pdf')
+saveas(hFig,'sternchen.png')
+saveas(hFig,'sternchen.eps')
 
 %% subfunctions
 function [rxVec, ryVec,rx,ry,x,y1,y2,rx1,ry1] = plotStar(x0,ratio,nv)
@@ -112,8 +119,6 @@ for idx = 0: nv-1
 end
 
 function [rxMatrix,ry1Matrix,ry2Matrix] = getCircle(r1,nv,xM)
-
-
 x1a = (-r1:r1);
 x1 = x1a + xM;
 y1 = sqrt(r1^2 - (x1a).^2);
@@ -131,7 +136,6 @@ for idx = 0: nv-1
         
     rxM(idx+1) = xM* cos(aAlpha);
     ryM(idx+1) = xM* sin(aAlpha);
-    
     rxMatrix(idx +1,:) = x1a' + rxM(idx+1);
     ry1Matrix(idx+1,:) = y1' + ryM(idx+1);
     ry2Matrix(idx+1,:) = y2' + ryM(idx+1);
